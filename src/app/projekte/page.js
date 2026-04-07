@@ -1,38 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Hero from '@/components/sections/Hero';
 import CTASection from '@/components/sections/CTASection';
+import { supabase } from '@/lib/supabase';
 
-const CATEGORIES = ['Alle', 'Bauen im Bestand', 'Gewerbe', 'Innenarchitektur', 'Kultur', 'Städtebau', 'Wohnen'];
-
-const FALLBACK_PROJECTS = [
-  { code: 'V12', title: 'Umbau und Sanierung Kulturdenkmal in Wiesbaden', category: 'Bauen im Bestand', slug: 'v12' },
-  { code: 'VLW', title: 'Neubau Villa in Niedernhausen', category: 'Wohnen', slug: 'vlw' },
-  { code: 'RR1', title: 'Umbau Wohn- und Geschäftshaus zum Mehrfamilienhaus in Montabaur', category: 'Bauen im Bestand', slug: 'rr1' },
-  { code: 'P01', title: 'Umbau Einfamilienhaus Limburg', category: 'Bauen im Bestand', slug: 'p01' },
-  { code: 'M17', title: 'Sanierung und Fassadenwiederherstellung in Wiesbaden', category: 'Wohnen', slug: 'm17' },
-  { code: 'N9C', title: 'Nhà 9NCK Café und Bar Konzept Hanoi', category: 'Gewerbe', slug: 'n9c' },
-  { code: 'CC1', title: 'Connecting Cube Hotelanlage Göttingen', category: 'Bauen im Bestand', slug: 'cc1' },
-  { code: 'BB1', title: 'Blumenbunker Haus der Baukultur', category: 'Kultur', slug: 'bb1' },
-  { code: 'UZ1', title: 'Urban Zipper Mixed Use Konzept', category: 'Gewerbe', slug: 'uz1' },
-  { code: 'ZS1', title: 'Zollspeicher Kultursteg am Rheinufer', category: 'Innenarchitektur', slug: 'zs1' },
-  { code: 'N08', title: 'Neubau Reihenhäuser in Dornheim', category: 'Wohnen', slug: 'n08' },
-  { code: 'SK1', title: 'Siedlung Klarenthal Stadtentwicklung und Sanierung', category: 'Städtebau', slug: 'sk1' },
-];
+const CATEGORIES = ['Tất cả', 'Bildung', 'Gewerbe', 'Kultur', 'Wohnen'];
 
 export default function ProjektePage() {
-  const [activeCategory, setActiveCategory] = useState('Alle');
+  const [activeCategory, setActiveCategory] = useState('Tất cả');
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = activeCategory === 'Alle'
-    ? FALLBACK_PROJECTS
-    : FALLBACK_PROJECTS.filter(p => p.category === activeCategory);
+  useEffect(() => {
+    async function fetchProjects() {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('display_order', { ascending: true });
+      
+      if (data) setProjects(data);
+      setLoading(false);
+    }
+    fetchProjects();
+  }, []);
+
+  const filtered = activeCategory === 'Tất cả'
+    ? projects
+    : projects.filter(p => p.category === activeCategory);
 
   return (
     <>
       <Hero
-        title="Projekte"
+        title="Dự án"
         backgroundImage="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1920&q=80"
         small
       />
@@ -51,31 +53,67 @@ export default function ProjektePage() {
             ))}
           </div>
 
-          <div className="grid-3">
-            {filtered.map((p, i) => (
-              <Link key={i} href={`/projekte/${p.slug}`} className="card">
-                <div
-                  className="card-image"
-                  style={{
-                    background: `linear-gradient(${135 + i * 25}deg, #2d3436 0%, #636e72 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '2.5rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.05em',
-                  }}
-                >
-                  {p.code}
-                </div>
-                <div className="card-body">
-                  <div className="card-tag">{p.category}</div>
-                  <div className="card-title">{p.code} – {p.title}</div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '4rem' }}>
+              <p className="text-muted">Đang tải dự án...</p>
+            </div>
+          ) : (
+            <div className="grid-3">
+              {filtered.map((p, i) => {
+                // Build featured image URL from Cloudinary
+                const folderFiles = [];
+                const featuredUrl = `https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600/vgarco/projects/${p.slug}/FEATURED_${p.slug}`;
+                // Use a fallback gradient
+                const hasFeatured = p.is_featured !== undefined;
+
+                return (
+                  <Link key={p.id || i} href={`/projekte/${p.slug}`} className="card">
+                    <div
+                      className="card-image"
+                      style={{
+                        position: 'relative',
+                        overflow: 'hidden',
+                        background: `linear-gradient(${135 + i * 25}deg, #2d3436 0%, #636e72 100%)`,
+                      }}
+                    >
+                      <img
+                        src={`https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/vgarco/projects/${p.slug}`}
+                        alt={p.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                        }}
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                      />
+                      <span style={{
+                        position: 'relative',
+                        color: 'white',
+                        fontSize: '2.5rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.05em',
+                        zIndex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '100%',
+                      }}>
+                        {p.code}
+                      </span>
+                    </div>
+                    <div className="card-body">
+                      <div className="card-tag">{p.category}</div>
+                      <div className="card-title">{p.title}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 

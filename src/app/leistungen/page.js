@@ -2,21 +2,21 @@ import Hero from '@/components/sections/Hero';
 import CTASection from '@/components/sections/CTASection';
 import { getSupabaseServer } from '@/lib/supabase';
 
-export const metadata = { title: 'Leistungen | fbnSTUDIO' };
+export const metadata = { title: 'Dịch vụ | VGARCO' };
 
 const FALLBACK_SERVICES = [
-  { title: 'Bestandsaufnahme', description: 'Erfassung und Bewertung der bestehenden Bausubstanz als verlässliche Grundlage für alle weiteren Planungsschritte.' },
-  { title: 'Bauen im Bestand', description: 'Umbau, Sanierung und Weiterentwicklung bestehender Wohn- und Gewerbegebäude. Analyse der vorhandenen Substanz, strukturelle Neuordnung und nachhaltige Konzepte.' },
-  { title: 'Denkmalschutz', description: 'Sensible Planung und denkmalgerechte Sanierung historischer Gebäude in enger Abstimmung mit den zuständigen Behörden.' },
-  { title: 'Energieberatung', description: 'Analyse energetischer Potenziale, Entwicklung wirtschaftlicher Maßnahmen, Fördermittelberatung sowie Planung energieeffizienter Lösungen.' },
-  { title: 'Machbarkeitsstudien', description: 'Prüfung von Grundstücken und Bestandsimmobilien hinsichtlich Nutzungspotenzial, Genehmigungsfähigkeit und Kostenrahmen.' },
-  { title: 'Konzept & Entwurf', description: 'Entwicklung architektonischer Konzepte auf Basis von Ort, Nutzung, Wirtschaftlichkeit und Nachhaltigkeit.' },
-  { title: 'Innenarchitektur', description: 'Gestaltung funktionaler und atmosphärischer Innenräume. Material-, Farb- und Möblierungskonzepte für Wohn- und Arbeitswelten.' },
-  { title: 'BIM und digitale Planung', description: 'Digitale Planung mit BIM und 3D-Modellen für transparente Prozesse und präzise Koordination.' },
-  { title: 'Ausführungsplanung', description: 'Detaillierte Ausführungsplanung und Koordination aller Beteiligten. Schnittstellenmanagement und Qualitätssicherung.' },
-  { title: 'Neubau', description: 'Entwurf und Realisierung hochwertiger Neubauten für Wohn- und Gewerbenutzung.' },
-  { title: 'Sanierung & energetische Modernisierung', description: 'Planung und Umsetzung von Sanierungsmaßnahmen mit Fokus auf Energieeffizienz und langfristige Nutzungssicherheit.' },
-  { title: 'Beratung im Bau- und Immobilienwesen', description: 'Beratung von Bauherren, Käufern und Investoren zu Machbarkeit, Kosten, Genehmigungen und Projektstruktur.' },
+  { title: 'Thiết kế kiến trúc', description: 'Thiết kế kiến trúc công trình dân dụng, công nghiệp, giáo dục và văn hóa với phong cách hiện đại, tối ưu công năng.' },
+  { title: 'Thiết kế nội thất', description: 'Thiết kế không gian nội thất chuyên nghiệp, đẹp mắt và tiện nghi cho mọi loại công trình.' },
+  { title: 'Thi công xây dựng', description: 'Thi công xây dựng trọn gói từ móng đến hoàn thiện, đảm bảo chất lượng và tiến độ.' },
+  { title: 'Quy hoạch đô thị', description: 'Lập quy hoạch và thiết kế đô thị bền vững, thân thiện với môi trường.' },
+  { title: 'Tư vấn giám sát', description: 'Dịch vụ tư vấn giám sát thi công, đảm bảo chất lượng công trình theo tiêu chuẩn kỹ thuật.' },
+  { title: 'Thiết kế cảnh quan', description: 'Thiết kế cảnh quan sân vườn, công viên và không gian xanh cho các dự án.' },
+  { title: 'Cải tạo & Nâng cấp', description: 'Cải tạo, nâng cấp và mở rộng các công trình hiện hữu với giải pháp tối ưu.' },
+  { title: 'Thiết kế BIM', description: 'Ứng dụng công nghệ BIM trong thiết kế và quản lý dự án, tăng hiệu quả phối hợp.' },
+  { title: 'Lập dự án đầu tư', description: 'Tư vấn lập dự án đầu tư, phân tích khả thi và lập kế hoạch tài chính cho dự án.' },
+  { title: 'Xây dựng dân dụng', description: 'Thiết kế và xây dựng nhà ở, chung cư, biệt thự và các công trình dân dụng chất lượng cao.' },
+  { title: 'Xây dựng công nghiệp', description: 'Thiết kế và thi công nhà máy, kho xưởng, nhà xưởng công nghiệp.' },
+  { title: 'Tư vấn thiết kế', description: 'Tư vấn thiết kế toàn diện cho chủ đầu tư, từ lập kế hoạch đến hoàn thiện giải pháp.' },
 ];
 
 export default async function LeistungenPage() {
@@ -30,19 +30,18 @@ export default async function LeistungenPage() {
   return (
     <>
       <Hero
-        title="Leistungen"
+        title="Dịch vụ"
         backgroundImage="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80"
         small
       />
 
       <section className="section-lg section-warm">
         <div className="container-narrow text-center">
-          <h2 style={{ marginBottom: '1.5rem' }}>Unser Leistungsspektrum</h2>
+          <h2 style={{ marginBottom: '1.5rem' }}>Dịch vụ của chúng tôi</h2>
           <p className="text-body-lg text-muted">
-            Wir begleiten Bauvorhaben durch alle Leistungsphasen der HOAI und bieten das
-            gesamte Spektrum klassischer Architekturleistungen. Unsere Schwerpunkte liegen
-            im Bauen im Bestand, im Denkmalschutz, in der nachhaltigen Sanierung, im
-            hochwertigen Neubau sowie in der Innenarchitektur.
+            Chúng tôi đồng hành cùng dự án xây dựng qua tất cả các giai đoạn và cung cấp
+            đầy đủ dịch vụ kiến trúc - xây dựng chuyên nghiệp. Trọng tâm của chúng tôi là
+            thiết kế công trình giáo dục, văn hóa, dân dụng và công nghiệp.
           </p>
         </div>
       </section>
@@ -54,7 +53,7 @@ export default async function LeistungenPage() {
               key={i}
               style={{
                 display: 'grid',
-                gridTemplateColumns: i % 2 === 0 ? '1fr 1fr' : '1fr 1fr',
+                gridTemplateColumns: '1fr 1fr',
                 gap: '4rem',
                 alignItems: 'center',
                 padding: '3rem 0',
@@ -82,8 +81,8 @@ export default async function LeistungenPage() {
       </section>
 
       <CTASection
-        title="Planen Sie ein Bauvorhaben? Wir beraten Sie gerne."
-        buttonLabel="Kontakt"
+        title="Bạn đang lên kế hoạch xây dựng? Hãy để chúng tôi tư vấn."
+        buttonLabel="Liên hệ"
         buttonHref="/kontakt"
       />
     </>

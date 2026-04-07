@@ -17,20 +17,10 @@ async function getHomeData() {
   };
 }
 
-// Fallback data when Supabase is not yet connected
 const FALLBACK_SERVICES = [
-  'Bestandsaufnahme', 'Bauen im Bestand', 'Denkmalschutz', 'Energieberatung',
-  'Machbarkeitsstudien', 'Konzept & Entwurf', 'Innenarchitektur', 'BIM und digitale Planung',
-  'Ausführungsplanung', 'Neubau', 'Sanierung & Modernisierung', 'Beratung',
-];
-
-const FALLBACK_PROJECTS = [
-  { code: 'V12', title: 'Umbau und Sanierung Kulturdenkmal in Wiesbaden', category: 'Bauen im Bestand', slug: 'v12' },
-  { code: 'VLW', title: 'Neubau Villa in Niedernhausen', category: 'Wohnen', slug: 'vlw' },
-  { code: 'RR1', title: 'Umbau Wohn- und Geschäftshaus in Montabaur', category: 'Bauen im Bestand', slug: 'rr1' },
-  { code: 'M17', title: 'Sanierung und Fassadenwiederherstellung in Wiesbaden', category: 'Wohnen', slug: 'm17' },
-  { code: 'N9C', title: 'Nhà 9NCK Café und Bar Konzept Hanoi', category: 'Gewerbe', slug: 'n9c' },
-  { code: 'CC1', title: 'Connecting Cube Hotelanlage Göttingen', category: 'Bauen im Bestand', slug: 'cc1' },
+  'Thiết kế kiến trúc', 'Thiết kế nội thất', 'Thi công xây dựng', 'Quy hoạch đô thị',
+  'Tư vấn giám sát', 'Thiết kế cảnh quan', 'Cải tạo & Nâng cấp', 'Thiết kế BIM',
+  'Lập dự án đầu tư', 'Xây dựng dân dụng', 'Xây dựng công nghiệp', 'Tư vấn thiết kế',
 ];
 
 export default async function HomePage() {
@@ -45,12 +35,12 @@ export default async function HomePage() {
     ? data.services.map(s => s.title)
     : FALLBACK_SERVICES;
 
-  const projects = data.projects.length > 0 ? data.projects : FALLBACK_PROJECTS;
+  const projects = data.projects.length > 0 ? data.projects : [];
 
   return (
     <>
       <Hero
-        title="Zuhören – Analysieren – Kreieren – Lösungen entwickeln"
+        title="Lắng nghe – Phân tích – Sáng tạo – Phát triển giải pháp"
         backgroundImage="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1920&q=80"
       />
 
@@ -58,21 +48,19 @@ export default async function HomePage() {
       <section className="section-lg section-warm">
         <div className="container-narrow text-center">
           <h2 style={{ marginBottom: '1.5rem' }}>
-            Architekt in Wiesbaden für Umbau Sanierung und Neubau
+            VGARCO - Kiến trúc & Xây dựng chất lượng cao
           </h2>
           <p className="text-body-lg text-muted" style={{ marginBottom: '1rem' }}>
-            fbnSTUDIO ist ein Architekturbüro in Wiesbaden mit Schwerpunkt auf Umbau,
-            nachhaltiger Sanierung, Denkmalschutz, Neubau und Innenarchitektur. Wir entwickeln
-            Architektur, die Bestand weiterdenkt, Energie reduziert und Lebensräume schafft,
-            die langfristig überzeugen.
+            VGARCO CO.,LTD là công ty kiến trúc và xây dựng với chuyên môn trong thiết kế,
+            thi công các công trình giáo dục, văn hóa, dân dụng và công nghiệp. Chúng tôi phát triển
+            kiến trúc hiện đại, tối ưu năng lượng và tạo ra không gian sống bền vững.
           </p>
           <p className="text-body-lg text-muted" style={{ marginBottom: '2rem' }}>
-            Wir gestalten Architektur, die funktioniert und Mehrwert schafft. Jedes Projekt
-            beginnt mit einer klaren Analyse und endet mit einer Lösung, die gestalterisch,
-            technisch und wirtschaftlich tragfähig ist.
+            Mỗi dự án bắt đầu từ phân tích rõ ràng và kết thúc bằng giải pháp
+            hiệu quả về thiết kế, kỹ thuật và kinh tế.
           </p>
           <Link href="/studio" className="btn btn-primary btn-icon">
-            Über Uns
+            Về chúng tôi
           </Link>
         </div>
       </section>
@@ -80,13 +68,13 @@ export default async function HomePage() {
       {/* Services Section */}
       <section className="section-lg section-warm" style={{ paddingTop: 0 }}>
         <div className="container text-center">
-          <h2 style={{ marginBottom: '1.5rem' }}>Unsere Leistungen</h2>
+          <h2 style={{ marginBottom: '1.5rem' }}>Dịch vụ của chúng tôi</h2>
           <p className="text-body-lg text-muted container-narrow" style={{ marginBottom: '2rem' }}>
-            Wir begleiten Bauvorhaben durch alle Leistungsphasen der HOAI und bieten das
-            gesamte Spektrum klassischer Architekturleistungen.
+            Chúng tôi đồng hành cùng dự án xây dựng qua tất cả các giai đoạn và cung cấp
+            đầy đủ dịch vụ kiến trúc chuyên nghiệp.
           </p>
           <Link href="/leistungen" className="btn btn-primary btn-icon" style={{ marginBottom: '3rem' }}>
-            Erfahren Sie mehr
+            Tìm hiểu thêm
           </Link>
           <div className="grid-3" style={{ textAlign: 'left' }}>
             {services.map((s, i) => (
@@ -101,27 +89,25 @@ export default async function HomePage() {
       {/* Projects Section */}
       <section className="section">
         <div className="container">
-          <h2 style={{ marginBottom: '2rem' }}>Projekte</h2>
+          <h2 style={{ marginBottom: '2rem' }}>Dự án nổi bật</h2>
           <div className="grid-3">
             {projects.map((p, i) => (
               <Link key={i} href={`/projekte/${p.slug}`} className="card">
                 <div
                   className="card-image"
                   style={{
+                    position: 'relative',
+                    overflow: 'hidden',
                     background: `linear-gradient(135deg, #2d3436 0%, #636e72 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '2rem',
-                    fontWeight: 700,
+                    backgroundImage: `url(https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/vgarco/projects/${p.slug})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                   }}
                 >
-                  {p.code}
                 </div>
                 <div className="card-body">
                   <div className="card-tag">{p.category}</div>
-                  <div className="card-title">{p.code} – {p.title}</div>
+                  <div className="card-title">{p.title}</div>
                 </div>
               </Link>
             ))}

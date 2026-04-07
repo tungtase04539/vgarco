@@ -7,35 +7,34 @@ export default function Footer() {
         <div className="footer-grid">
           <div>
             <div className="footer-brand">
-              fbnSTUDIO Ferri Nguyen Architekten PartG mbB
+              VGARCO CO.,LTD
             </div>
             <div className="footer-address">
-              Viktoriastraße 12<br />
-              65189 Wiesbaden<br /><br />
-              <a href="mailto:info@fbnstudio.de">info@fbnstudio.de</a><br />
-              <a href="tel:+4961136093694">+49 611 360 93 694</a>
+              Hà Nội, Việt Nam<br /><br />
+              <a href="mailto:admin@vgarco.vn">admin@vgarco.vn</a><br />
+              <a href="tel:+84123456789">+84 123 456 789</a>
             </div>
           </div>
 
           <div>
-            <div className="footer-heading">Navigation</div>
-            <Link href="/studio" className="footer-link">Studio</Link>
-            <Link href="/leistungen" className="footer-link">Leistungen</Link>
-            <Link href="/projekte" className="footer-link">Projekte</Link>
-            <Link href="/journal" className="footer-link">Journal</Link>
-            <Link href="/kontakt" className="footer-link">Kontakt</Link>
+            <div className="footer-heading">Điều hướng</div>
+            <Link href="/studio" className="footer-link">Giới thiệu</Link>
+            <Link href="/leistungen" className="footer-link">Dịch vụ</Link>
+            <Link href="/projekte" className="footer-link">Dự án</Link>
+            <Link href="/journal" className="footer-link">Tin tức</Link>
+            <Link href="/kontakt" className="footer-link">Liên hệ</Link>
           </div>
 
           <div>
-            <div className="footer-heading">Rechtliches</div>
-            <Link href="/impressum" className="footer-link">Impressum</Link>
-            <Link href="/datenschutz" className="footer-link">Datenschutzerklärung</Link>
+            <div className="footer-heading">Pháp lý</div>
+            <Link href="/impressum" className="footer-link">Giới thiệu công ty</Link>
+            <Link href="/datenschutz" className="footer-link">Chính sách bảo mật</Link>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} fbnSTUDIO. Alle Rechte vorbehalten.</span>
-          <span>Architekturbüro in Wiesbaden</span>
+          <span>© {new Date().getFullYear()} VGARCO. All rights reserved.</span>
+          <span>Công ty Kiến trúc & Xây dựng</span>
         </div>
       </div>
     </footer>

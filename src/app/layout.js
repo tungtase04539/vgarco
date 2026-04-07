@@ -3,18 +3,18 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 export const metadata = {
-  title: 'fbnSTUDIO | Architekt in Wiesbaden',
-  description: 'Architekturbüro in Wiesbaden für Umbau, Sanierung, Denkmalschutz, Neubau & Innenarchitektur. Präzise Planung für hochwertige Wohn- und Gewerbeprojekte.',
+  title: 'VGARCO | Kiến trúc & Xây dựng',
+  description: 'VGARCO CO.,LTD - Công ty Kiến trúc và Xây dựng hàng đầu. Chuyên thiết kế, thi công các công trình dân dụng, công nghiệp, giáo dục và văn hóa.',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="de">
+    <html lang="vi">
       <body>
         <Navbar />
         <main>{children}</main>
         <Footer />
-        <a href="/kontakt" className="floating-contact" title="Kontakt">
+        <a href="/kontakt" className="floating-contact" title="Liên hệ">
           ✉
         </a>
       </body>

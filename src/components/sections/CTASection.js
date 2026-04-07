@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export default function CTASection({
-  title = 'Der richtige Zeitpunkt, Räume zu schaffen, die langfristig funktionieren.',
-  buttonLabel = 'Erfahren Sie mehr',
+  title = 'Thời điểm thích hợp để tạo nên không gian bền vững.',
+  buttonLabel = 'Tìm hiểu thêm',
   buttonHref = '/kontakt',
 }) {
   return (

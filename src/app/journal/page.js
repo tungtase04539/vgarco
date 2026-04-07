@@ -2,22 +2,22 @@ import Link from 'next/link';
 import Hero from '@/components/sections/Hero';
 import CTASection from '@/components/sections/CTASection';
 
-export const metadata = { title: 'Journal | fbnSTUDIO' };
+export const metadata = { title: 'Tin tức | VGARCO' };
 
 const FALLBACK_POSTS = [
-  { title: 'Bestandsanalyse vor dem Umbau: Warum LPH 1 im Altbau über Erfolg oder Folgeschäden entscheidet', excerpt: 'Im Bestand wird nie auf leerer Wiese geplant. Jedes Gebäude bringt Geschichte, Eigenheiten und verdeckte Risiken mit...', category: 'Bauen im Bestand', slug: 'bestandsanalyse-lph1' },
-  { title: 'Denkmal energetisch sanieren: Die größten Fehler und wie Bauherren sie vermeiden', excerpt: 'Viele Bauherren starten mit einer simplen Erwartung: Wir sanieren energetisch wie beim Neubau...', category: 'Energetisch Sanieren', slug: 'denkmal-energetisch-sanieren' },
-  { title: 'Denkmal gekauft und dann Ärger mit dem Amt? Der Klassiker ist vermeidbar.', excerpt: 'Viele Bauherren verlieben sich in ein Denkmal wegen Charme, Lage und Geschichte und merken erst nach...', category: 'Denkmalschutz', slug: 'denkmal-gekauft' },
-  { title: 'Bauen im Bestand: Warum der Altbau oft mehr kann als gedacht', excerpt: 'Bestehende Gebäude haben Qualitäten, die sich in keinem Neubau reproduzieren lassen...', category: 'Bauen im Bestand', slug: 'altbau-potential' },
-  { title: 'Nachhaltigkeit im Neubau: Worauf es wirklich ankommt', excerpt: 'Nachhaltiges Bauen ist mehr als Dämmung und Solarpanels. Es beginnt bei der Planung...', category: 'Neubau', slug: 'nachhaltigkeit-neubau' },
-  { title: 'BIM in der Praxis: Wie digitale Planung Projekte verändert', excerpt: 'Building Information Modeling revolutioniert die Art, wie wir planen und bauen...', category: 'Digitale Planung', slug: 'bim-praxis' },
+  { title: 'Thi công trường học chất lượng cao — Tiêu chuẩn VGARCO', excerpt: 'Mỗi công trình giáo dục đều cần đảm bảo chất lượng thi công và an toàn cho học sinh...', category: 'Xây dựng', slug: 'thi-cong-truong-hoc' },
+  { title: 'Thiết kế bảo tàng — Kiến trúc phục vụ lịch sử', excerpt: 'Bảo tàng không chỉ là nơi lưu giữ, mà còn là không gian kể chuyện...', category: 'Thiết kế', slug: 'thiet-ke-bao-tang' },
+  { title: 'VGARCO tại Lào — Mở rộng thị trường quốc tế', excerpt: 'Với nhiều dự án thành công tại Lào, VGARCO khẳng định năng lực thi công quốc tế...', category: 'Quốc tế', slug: 'vgarco-tai-lao' },
+  { title: 'Xu hướng kiến trúc xanh 2024', excerpt: 'Kiến trúc bền vững không chỉ là xu hướng mà là yêu cầu bắt buộc...', category: 'Kiến trúc', slug: 'kien-truc-xanh-2024' },
+  { title: 'Ứng dụng BIM trong quản lý dự án', excerpt: 'Công nghệ BIM giúp tối ưu hóa quy trình thiết kế và thi công...', category: 'Công nghệ', slug: 'ung-dung-bim' },
+  { title: 'Khu nghỉ dưỡng HIDUMI — Dự án nghỉ dưỡng cao cấp', excerpt: 'Thiết kế hòa mình với thiên nhiên, tạo ra trải nghiệm nghỉ dưỡng đẳng cấp...', category: 'Dự án', slug: 'khu-nghi-duong-hidumi-news' },
 ];
 
 export default function JournalPage() {
   return (
     <>
       <Hero
-        title="Journal"
+        title="Tin tức"
         backgroundImage="https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=1920&q=80"
         small
       />
@@ -46,7 +46,7 @@ export default function JournalPage() {
                 <h2 style={{ marginBottom: '1rem' }}>{FALLBACK_POSTS[0].title}</h2>
                 <p className="text-body-lg text-muted">{FALLBACK_POSTS[0].excerpt}</p>
                 <span className="btn btn-primary btn-icon" style={{ marginTop: '1.5rem' }}>
-                  Weiterlesen
+                  Đọc thêm
                 </span>
               </div>
             </div>
@@ -78,8 +78,8 @@ export default function JournalPage() {
       </section>
 
       <CTASection
-        title="Haben Sie ein Projekt im Kopf?"
-        buttonLabel="Kontakt"
+        title="Bạn có ý tưởng cho dự án?"
+        buttonLabel="Liên hệ"
         buttonHref="/kontakt"
       />
     </>
