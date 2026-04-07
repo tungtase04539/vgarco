@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import Hero from '@/components/sections/Hero';
 import CTASection from '@/components/sections/CTASection';
 import { supabase } from '@/lib/supabase';
+import { GALLERY_MAP } from '@/lib/gallery-map';
 
+const CLOUD = 'dmjrk2fov';
 const CATEGORIES = ['Tất cả', 'Bildung', 'Gewerbe', 'Kultur', 'Wohnen'];
 
 export default function ProjektePage() {
@@ -60,11 +61,10 @@ export default function ProjektePage() {
           ) : (
             <div className="grid-3">
               {filtered.map((p, i) => {
-                // Build featured image URL from Cloudinary
-                const folderFiles = [];
-                const featuredUrl = `https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600/vgarco/projects/${p.slug}/FEATURED_${p.slug}`;
-                // Use a fallback gradient
-                const hasFeatured = p.is_featured !== undefined;
+                const images = GALLERY_MAP[p.slug] || [];
+                const thumbUrl = images.length > 0
+                  ? `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_600,h_400,c_fill/${images[0]}`
+                  : null;
 
                 return (
                   <Link key={p.id || i} href={`/projekte/${p.slug}`} className="card">
@@ -74,37 +74,11 @@ export default function ProjektePage() {
                         position: 'relative',
                         overflow: 'hidden',
                         background: `linear-gradient(${135 + i * 25}deg, #2d3436 0%, #636e72 100%)`,
+                        backgroundImage: thumbUrl ? `url(${thumbUrl})` : undefined,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
                       }}
-                    >
-                      <img
-                        src={`https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/vgarco/projects/${p.slug}`}
-                        alt={p.title}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                        }}
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                      />
-                      <span style={{
-                        position: 'relative',
-                        color: 'white',
-                        fontSize: '2.5rem',
-                        fontWeight: 700,
-                        letterSpacing: '0.05em',
-                        zIndex: 1,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '100%',
-                        height: '100%',
-                      }}>
-                        {p.code}
-                      </span>
-                    </div>
+                    />
                     <div className="card-body">
                       <div className="card-tag">{p.category}</div>
                       <div className="card-title">{p.title}</div>

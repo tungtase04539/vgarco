@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Hero from '@/components/sections/Hero';
 import CTASection from '@/components/sections/CTASection';
 import { getSupabaseServer } from '@/lib/supabase';
+import { GALLERY_MAP } from '@/lib/gallery-map';
 
 async function getHomeData() {
   const supabase = getSupabaseServer();
@@ -91,7 +92,12 @@ export default async function HomePage() {
         <div className="container">
           <h2 style={{ marginBottom: '2rem' }}>Dự án nổi bật</h2>
           <div className="grid-3">
-            {projects.map((p, i) => (
+            {projects.map((p, i) => {
+              const images = GALLERY_MAP[p.slug] || [];
+              const thumbUrl = images.length > 0
+                ? `https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/${images[0]}`
+                : null;
+              return (
               <Link key={i} href={`/projekte/${p.slug}`} className="card">
                 <div
                   className="card-image"
@@ -99,7 +105,7 @@ export default async function HomePage() {
                     position: 'relative',
                     overflow: 'hidden',
                     background: `linear-gradient(135deg, #2d3436 0%, #636e72 100%)`,
-                    backgroundImage: `url(https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/vgarco/projects/${p.slug})`,
+                    backgroundImage: thumbUrl ? `url(${thumbUrl})` : undefined,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                   }}
@@ -110,7 +116,8 @@ export default async function HomePage() {
                   <div className="card-title">{p.title}</div>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
