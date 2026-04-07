@@ -44,7 +44,7 @@ export default async function ProjectDetailPage({ params }) {
         </section>
         <section className="section">
           <div className="container">
-            <Link href="/projekte" className="btn btn-primary btn-icon">
+            <Link href="/du-an" className="btn btn-primary btn-icon">
               Tất cả dự án
             </Link>
           </div>
@@ -142,7 +142,7 @@ export default async function ProjectDetailPage({ params }) {
       {/* Back */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <Link href="/projekte" className="btn btn-primary btn-icon">
+          <Link href="/du-an" className="btn btn-primary btn-icon">
             Tất cả dự án
           </Link>
         </div>
@@ -151,7 +151,7 @@ export default async function ProjectDetailPage({ params }) {
       <CTASection
         title="Hãy trao đổi về dự án của bạn."
         buttonLabel="Liên hệ"
-        buttonHref="/kontakt"
+        buttonHref="/lien-he"
       />
     </>
   );

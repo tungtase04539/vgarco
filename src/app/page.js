@@ -60,7 +60,7 @@ export default async function HomePage() {
             Mỗi dự án bắt đầu từ phân tích rõ ràng và kết thúc bằng giải pháp
             hiệu quả về thiết kế, kỹ thuật và kinh tế.
           </p>
-          <Link href="/studio" className="btn btn-primary btn-icon">
+          <Link href="/gioi-thieu" className="btn btn-primary btn-icon">
             Về chúng tôi
           </Link>
         </div>
@@ -74,7 +74,7 @@ export default async function HomePage() {
             Chúng tôi đồng hành cùng dự án xây dựng qua tất cả các giai đoạn và cung cấp
             đầy đủ dịch vụ kiến trúc chuyên nghiệp.
           </p>
-          <Link href="/leistungen" className="btn btn-primary btn-icon" style={{ marginBottom: '3rem' }}>
+          <Link href="/dich-vu" className="btn btn-primary btn-icon" style={{ marginBottom: '3rem' }}>
             Tìm hiểu thêm
           </Link>
           <div className="grid-3" style={{ textAlign: 'left' }}>
@@ -98,7 +98,7 @@ export default async function HomePage() {
                 ? `https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/${images[0]}`
                 : null;
               return (
-              <Link key={i} href={`/projekte/${p.slug}`} className="card">
+              <Link key={i} href={`/du-an/${p.slug}`} className="card">
                 <div
                   className="card-image"
                   style={{

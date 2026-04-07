@@ -25,7 +25,7 @@ export default function JournalPage() {
       {/* Featured Article */}
       <section className="section-lg section-warm">
         <div className="container">
-          <Link href={`/journal/${FALLBACK_POSTS[0].slug}`} style={{ display: 'block' }}>
+          <Link href={`/tin-tuc/${FALLBACK_POSTS[0].slug}`} style={{ display: 'block' }}>
             <div style={{
               display: 'grid',
               gridTemplateColumns: '1.2fr 1fr',
@@ -59,7 +59,7 @@ export default function JournalPage() {
         <div className="container">
           <div className="grid-3">
             {FALLBACK_POSTS.slice(1).map((post, i) => (
-              <Link key={i} href={`/journal/${post.slug}`} className="card">
+              <Link key={i} href={`/tin-tuc/${post.slug}`} className="card">
                 <div
                   className="card-image"
                   style={{
@@ -80,7 +80,7 @@ export default function JournalPage() {
       <CTASection
         title="Bạn có ý tưởng cho dự án?"
         buttonLabel="Liên hệ"
-        buttonHref="/kontakt"
+        buttonHref="/lien-he"
       />
     </>
   );

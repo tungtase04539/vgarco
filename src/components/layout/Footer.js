@@ -18,11 +18,11 @@ export default function Footer() {
 
           <div>
             <div className="footer-heading">Điều hướng</div>
-            <Link href="/studio" className="footer-link">Giới thiệu</Link>
-            <Link href="/leistungen" className="footer-link">Dịch vụ</Link>
-            <Link href="/projekte" className="footer-link">Dự án</Link>
-            <Link href="/journal" className="footer-link">Tin tức</Link>
-            <Link href="/kontakt" className="footer-link">Liên hệ</Link>
+            <Link href="/gioi-thieu" className="footer-link">Giới thiệu</Link>
+            <Link href="/dich-vu" className="footer-link">Dịch vụ</Link>
+            <Link href="/du-an" className="footer-link">Dự án</Link>
+            <Link href="/tin-tuc" className="footer-link">Tin tức</Link>
+            <Link href="/lien-he" className="footer-link">Liên hệ</Link>
           </div>
 
           <div>

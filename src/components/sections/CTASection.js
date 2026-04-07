@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function CTASection({
   title = 'Thời điểm thích hợp để tạo nên không gian bền vững.',
   buttonLabel = 'Tìm hiểu thêm',
-  buttonHref = '/kontakt',
+  buttonHref = '/lien-he',
 }) {
   return (
     <section className="cta-section">

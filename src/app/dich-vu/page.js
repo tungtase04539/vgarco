@@ -83,7 +83,7 @@ export default async function LeistungenPage() {
       <CTASection
         title="Bạn đang lên kế hoạch xây dựng? Hãy để chúng tôi tư vấn."
         buttonLabel="Liên hệ"
-        buttonHref="/kontakt"
+        buttonHref="/lien-he"
       />
     </>
   );

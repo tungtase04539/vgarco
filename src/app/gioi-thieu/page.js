@@ -79,7 +79,7 @@ export default function StudioPage() {
       <CTASection
         title="Hãy trao đổi về dự án của bạn."
         buttonLabel="Liên hệ"
-        buttonHref="/kontakt"
+        buttonHref="/lien-he"
       />
     </>
   );

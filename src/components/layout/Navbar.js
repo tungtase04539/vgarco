@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
-  { href: '/studio', label: 'Giới thiệu' },
-  { href: '/leistungen', label: 'Dịch vụ' },
-  { href: '/projekte', label: 'Dự án' },
-  { href: '/journal', label: 'Tin tức' },
+  { href: '/gioi-thieu', label: 'Giới thiệu' },
+  { href: '/dich-vu', label: 'Dịch vụ' },
+  { href: '/du-an', label: 'Dự án' },
+  { href: '/tin-tuc', label: 'Tin tức' },
 ];
 
 export default function Navbar() {
@@ -48,7 +48,7 @@ export default function Navbar() {
         ))}
         <span className="navbar-lang">VN</span>
         <Link
-          href="/kontakt"
+          href="/lien-he"
           className="navbar-link-cta"
           onClick={() => setIsOpen(false)}
         >

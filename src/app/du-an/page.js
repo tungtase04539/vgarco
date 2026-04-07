@@ -8,7 +8,7 @@ import { supabase } from '@/lib/supabase';
 import { GALLERY_MAP } from '@/lib/gallery-map';
 
 const CLOUD = 'dmjrk2fov';
-const CATEGORIES = ['Tất cả', 'Bildung', 'Gewerbe', 'Kultur', 'Wohnen'];
+const CATEGORIES = ['Tất cả', 'Giáo dục', 'Công nghiệp', 'Văn hóa', 'Nhà ở'];
 
 export default function ProjektePage() {
   const [activeCategory, setActiveCategory] = useState('Tất cả');
@@ -67,7 +67,7 @@ export default function ProjektePage() {
                   : null;
 
                 return (
-                  <Link key={p.id || i} href={`/projekte/${p.slug}`} className="card">
+                  <Link key={p.id || i} href={`/du-an/${p.slug}`} className="card">
                     <div
                       className="card-image"
                       style={{
