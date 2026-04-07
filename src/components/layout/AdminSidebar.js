@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 const ADMIN_LINKS = [
   { href: '/admin', label: 'Dashboard', icon: '◫' },
@@ -14,6 +15,12 @@ const ADMIN_LINKS = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.push('/admin/login');
+  }
 
   return (
     <aside className="admin-sidebar">
@@ -37,10 +44,26 @@ export default function AdminSidebar() {
         ))}
       </nav>
 
-      <div style={{ marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
         <Link href="/" className="admin-nav-link" target="_blank" rel="noopener">
           ↗ Website anzeigen
         </Link>
+        <button
+          onClick={handleLogout}
+          className="admin-nav-link"
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            textAlign: 'left',
+            width: '100%',
+            font: 'inherit',
+            color: 'inherit',
+            padding: 'inherit',
+          }}
+        >
+          ⏻ Abmelden
+        </button>
       </div>
     </aside>
   );

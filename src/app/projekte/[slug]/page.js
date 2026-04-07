@@ -1,23 +1,55 @@
 import Link from 'next/link';
 import CTASection from '@/components/sections/CTASection';
+import { getSupabaseServer } from '@/lib/supabase';
 
-export const metadata = { title: 'Projektdetail | fbnSTUDIO' };
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const supabase = getSupabaseServer();
+  const { data: project } = await supabase
+    .from('projects')
+    .select('title,code')
+    .eq('slug', slug)
+    .single();
+  
+  return {
+    title: project ? `${project.code} – ${project.title} | fbnSTUDIO` : 'Projektdetail | fbnSTUDIO',
+  };
+}
 
 export default async function ProjectDetailPage({ params }) {
   const { slug } = await params;
+  const supabase = getSupabaseServer();
 
-  // TODO: Fetch from Supabase when connected
-  const project = {
-    code: slug.toUpperCase(),
-    title: 'Umbau und Sanierung Kulturdenkmal in Wiesbaden',
-    description: 'Umbau und Sanierung eines denkmalgeschützten Wohnhauses mit dem Ziel, historische Bausubstanz zu erhalten und zugleich moderne Büroflächen zu schaffen. Das Projekt verbindet Denkmalschutz, Bauen im Bestand und zeitgemäße Nutzung zu einem funktionalen und architektonisch präzisen Gesamtkonzept.',
-    client: 'Privat',
-    location: 'Wiesbaden',
-    phases: 'LPH 1-8',
-    area: '450 m²',
-    status: 'In Umsetzung',
-    category: 'Bauen im Bestand, Denkmalschutz',
-  };
+  const { data: project } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  // Fallback if project not found in DB
+  if (!project) {
+    return (
+      <>
+        <section className="hero hero-sm">
+          <div className="hero-bg" style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }} />
+          <div className="hero-overlay" />
+          <div className="hero-content">
+            <h1 className="hero-title" style={{ fontSize: 'var(--font-display-md)' }}>
+              Projekt nicht gefunden
+            </h1>
+            <p className="hero-subtitle">Dieses Projekt existiert nicht oder wurde entfernt.</p>
+          </div>
+        </section>
+        <section className="section">
+          <div className="container">
+            <Link href="/projekte" className="btn btn-primary btn-icon">
+              Alle Projekte
+            </Link>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
@@ -48,7 +80,7 @@ export default async function ProjectDetailPage({ params }) {
               { label: 'Fläche', value: project.area },
               { label: 'Status', value: project.status },
               { label: 'Kategorie', value: project.category },
-            ].map((m, i) => (
+            ].filter(m => m.value).map((m, i) => (
               <div key={i} className="project-meta-item">
                 <div className="project-meta-label">{m.label}</div>
                 <div className="project-meta-value">{m.value}</div>
@@ -59,13 +91,15 @@ export default async function ProjectDetailPage({ params }) {
       </section>
 
       {/* Description */}
-      <section className="section-lg">
-        <div className="container-narrow">
-          <p className="text-body-lg text-muted">{project.description}</p>
-        </div>
-      </section>
+      {project.description && (
+        <section className="section-lg">
+          <div className="container-narrow">
+            <p className="text-body-lg text-muted">{project.description}</p>
+          </div>
+        </section>
+      )}
 
-      {/* Gallery */}
+      {/* Gallery Placeholder */}
       <section className="section">
         <div className="container">
           <div className="gallery-grid">
