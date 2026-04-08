@@ -2,16 +2,16 @@ import Link from 'next/link';
 
 export default function AdminDashboard() {
   const stats = [
-    { label: 'Projekte', value: '12', href: '/admin/projects' },
-    { label: 'Leistungen', value: '12', href: '/admin/services' },
-    { label: 'Journal Artikel', value: '6', href: '/admin/journal' },
-    { label: 'Team Mitglieder', value: '1', href: '/admin/team' },
+    { label: 'Dự án', value: '12', href: '/admin/projects' },
+    { label: 'Dịch vụ', value: '12', href: '/admin/services' },
+    { label: 'Bài viết', value: '6', href: '/admin/journal' },
+    { label: 'Thành viên', value: '1', href: '/admin/team' },
   ];
 
   return (
     <>
       <div className="admin-header">
-        <h1>Dashboard</h1>
+        <h1>Tổng quan</h1>
       </div>
 
       <div className="grid-4" style={{ marginBottom: '2rem' }}>
@@ -27,17 +27,17 @@ export default function AdminDashboard() {
 
       <div className="card">
         <div className="card-body">
-          <h3 style={{ marginBottom: '1rem' }}>Willkommen im Admin-Bereich</h3>
+          <h3 style={{ marginBottom: '1rem' }}>Chào mừng đến trang quản trị</h3>
           <p className="text-muted">
-            Verwalten Sie Projekte, Leistungen, Journal-Artikel und Team-Mitglieder.
-            Alle Änderungen werden direkt auf der Website sichtbar.
+            Quản lý dự án, dịch vụ, bài viết và thành viên đội ngũ.
+            Mọi thay đổi sẽ hiển thị trực tiếp trên website.
           </p>
           <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem' }}>
             <Link href="/admin/projects" className="btn btn-primary" style={{ fontSize: '0.8rem' }}>
-              Projekte verwalten
+              Quản lý dự án
             </Link>
             <Link href="/admin/journal" className="btn btn-outline" style={{ fontSize: '0.8rem', color: 'var(--color-on-surface)' }}>
-              Neuen Artikel schreiben
+              Viết bài mới
             </Link>
           </div>
         </div>

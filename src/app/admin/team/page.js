@@ -3,12 +3,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
-const FALLBACK_TEAM = [
-  { id: '1', name: 'Ferri Nguyen', title: 'Dipl.-Ing. Architekt', bio: 'Gründer von fbnSTUDIO. Spezialisiert auf Denkmalschutz und Bauen im Bestand.', display_order: 1, is_active: true },
-];
-
 export default function AdminTeamPage() {
-  const [members, setMembers] = useState(FALLBACK_TEAM);
+  const [members, setMembers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
   const [toast, setToast] = useState('');
@@ -19,7 +15,7 @@ export default function AdminTeamPage() {
   async function loadTeam() {
     try {
       const { data } = await supabase.from('team_members').select('*').order('display_order');
-      if (data?.length > 0) setMembers(data);
+      if (data) setMembers(data);
     } catch (e) {}
   }
 
@@ -30,21 +26,19 @@ export default function AdminTeamPage() {
     e.preventDefault();
     if (editing) {
       try { await supabase.from('team_members').update(form).eq('id', editing.id); } catch(e) {}
-      setMembers(members.map(m => m.id === editing.id ? { ...m, ...form } : m));
     } else {
-      const newItem = { ...form, id: Date.now().toString() };
-      try { const { data } = await supabase.from('team_members').insert(form).select().single(); if (data) newItem.id = data.id; } catch(e) {}
-      setMembers([...members, newItem]);
+      try { await supabase.from('team_members').insert(form); } catch(e) {}
     }
     setShowForm(false);
-    showToastMsg(editing ? 'Mitglied aktualisiert' : 'Mitglied hinzugefügt');
+    loadTeam();
+    showToastMsg(editing ? 'Đã cập nhật thành viên' : 'Đã thêm thành viên mới');
   }
 
   async function handleDelete(id) {
-    if (!confirm('Mitglied wirklich entfernen?')) return;
+    if (!confirm('Bạn có chắc muốn xóa thành viên này?')) return;
     try { await supabase.from('team_members').delete().eq('id', id); } catch(e) {}
     setMembers(members.filter(m => m.id !== id));
-    showToastMsg('Mitglied entfernt');
+    showToastMsg('Đã xóa thành viên');
   }
 
   function showToastMsg(msg) { setToast(msg); setTimeout(() => setToast(''), 3000); }
@@ -52,42 +46,42 @@ export default function AdminTeamPage() {
   return (
     <>
       <div className="admin-header">
-        <h1>Team</h1>
-        <button className="btn btn-primary" onClick={openCreate}>+ Neues Mitglied</button>
+        <h1>Đội ngũ</h1>
+        <button className="btn btn-primary" onClick={openCreate}>+ Thêm thành viên</button>
       </div>
 
       {showForm && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
           <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2rem', width: '100%', maxWidth: '540px' }}>
-            <h2 style={{ marginBottom: '1.5rem' }}>{editing ? 'Mitglied bearbeiten' : 'Neues Mitglied'}</h2>
+            <h2 style={{ marginBottom: '1.5rem' }}>{editing ? 'Sửa thành viên' : 'Thêm thành viên mới'}</h2>
             <form onSubmit={handleSave}>
               <div className="form-group">
-                <label className="form-label">Name</label>
+                <label className="form-label">Họ và tên</label>
                 <input className="form-input-bordered" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
               </div>
               <div className="form-group">
-                <label className="form-label">Titel / Position</label>
+                <label className="form-label">Chức vụ</label>
                 <input className="form-input-bordered" value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
               </div>
               <div className="form-group">
-                <label className="form-label">Bio</label>
+                <label className="form-label">Giới thiệu</label>
                 <textarea className="form-input-bordered" style={{ minHeight: '100px' }} value={form.bio} onChange={e => setForm({...form, bio: e.target.value})} />
               </div>
               <div className="grid-2">
                 <div className="form-group">
-                  <label className="form-label">Reihenfolge</label>
+                  <label className="form-label">Thứ tự hiển thị</label>
                   <input type="number" className="form-input-bordered" value={form.display_order} onChange={e => setForm({...form, display_order: parseInt(e.target.value)})} />
                 </div>
                 <div className="form-group" style={{ display: 'flex', alignItems: 'end', paddingBottom: '0.75rem' }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <input type="checkbox" checked={form.is_active} onChange={e => setForm({...form, is_active: e.target.checked})} />
-                    Aktiv
+                    Hiển thị
                   </label>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                <button type="submit" className="btn btn-primary">Speichern</button>
-                <button type="button" className="btn btn-outline" style={{ color: 'var(--color-on-surface)' }} onClick={() => setShowForm(false)}>Abbrechen</button>
+                <button type="submit" className="btn btn-primary">Lưu</button>
+                <button type="button" className="btn btn-outline" style={{ color: 'var(--color-on-surface)' }} onClick={() => setShowForm(false)}>Hủy</button>
               </div>
             </form>
           </div>
@@ -96,7 +90,7 @@ export default function AdminTeamPage() {
 
       <table className="admin-table">
         <thead>
-          <tr><th>#</th><th>Name</th><th>Titel</th><th>Aktiv</th><th>Aktionen</th></tr>
+          <tr><th>#</th><th>Họ tên</th><th>Chức vụ</th><th>Hiển thị</th><th>Thao tác</th></tr>
         </thead>
         <tbody>
           {members.map(m => (
@@ -107,8 +101,8 @@ export default function AdminTeamPage() {
               <td>{m.is_active ? '✓' : '—'}</td>
               <td>
                 <div className="admin-actions">
-                  <button className="admin-btn-sm admin-btn-edit" onClick={() => openEdit(m)}>Bearbeiten</button>
-                  <button className="admin-btn-sm admin-btn-delete" onClick={() => handleDelete(m.id)}>Löschen</button>
+                  <button className="admin-btn-sm admin-btn-edit" onClick={() => openEdit(m)}>Sửa</button>
+                  <button className="admin-btn-sm admin-btn-delete" onClick={() => handleDelete(m.id)}>Xóa</button>
                 </div>
               </td>
             </tr>

@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
       await signIn(email, password);
       router.push('/admin');
     } catch (err) {
-      setError(err.message || 'Login fehlgeschlagen');
+      setError(err.message || 'Đăng nhập thất bại');
     }
     setLoading(false);
   }
@@ -42,10 +42,10 @@ export default function AdminLoginPage() {
       }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>
-            <span style={{ fontWeight: 700 }}>fbn</span>
-            <span style={{ fontWeight: 200, letterSpacing: '0.15em' }}>STUDIO</span>
+            <span style={{ fontWeight: 700 }}>VGAR</span>
+            <span style={{ fontWeight: 200, letterSpacing: '0.15em' }}>CO</span>
           </h1>
-          <p className="text-muted">Admin Login</p>
+          <p className="text-muted">Đăng nhập quản trị</p>
         </div>
 
         {error && (
@@ -63,7 +63,7 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">E-Mail</label>
+            <label className="form-label">Email</label>
             <input
               type="email"
               className="form-input-bordered"
@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Passwort</label>
+            <label className="form-label">Mật khẩu</label>
             <input
               type="password"
               className="form-input-bordered"
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
             style={{ width: '100%', justifyContent: 'center', marginTop: '0.5rem' }}
             disabled={loading}
           >
-            {loading ? 'Einen Moment...' : 'Anmelden'}
+            {loading ? 'Đang xử lý...' : 'Đăng nhập'}
           </button>
         </form>
       </div>

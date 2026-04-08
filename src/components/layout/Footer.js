@@ -27,8 +27,7 @@ export default function Footer() {
 
           <div>
             <div className="footer-heading">Pháp lý</div>
-            <Link href="/impressum" className="footer-link">Giới thiệu công ty</Link>
-            <Link href="/datenschutz" className="footer-link">Chính sách bảo mật</Link>
+            <Link href="/gioi-thieu" className="footer-link">Giới thiệu công ty</Link>
           </div>
         </div>
 

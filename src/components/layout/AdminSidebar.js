@@ -5,12 +5,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 const ADMIN_LINKS = [
-  { href: '/admin', label: 'Dashboard', icon: '◫' },
-  { href: '/admin/projects', label: 'Projekte', icon: '▦' },
-  { href: '/admin/services', label: 'Leistungen', icon: '◇' },
-  { href: '/admin/journal', label: 'Journal', icon: '▤' },
-  { href: '/admin/team', label: 'Team', icon: '◎' },
-  { href: '/admin/settings', label: 'Einstellungen', icon: '⚙' },
+  { href: '/admin', label: 'Tổng quan', icon: '◫' },
+  { href: '/admin/projects', label: 'Dự án', icon: '▦' },
+  { href: '/admin/services', label: 'Dịch vụ', icon: '◇' },
+  { href: '/admin/journal', label: 'Tin tức', icon: '▤' },
+  { href: '/admin/team', label: 'Đội ngũ', icon: '◎' },
+  { href: '/admin/settings', label: 'Cài đặt', icon: '⚙' },
 ];
 
 export default function AdminSidebar() {
@@ -25,9 +25,9 @@ export default function AdminSidebar() {
   return (
     <aside className="admin-sidebar">
       <div className="admin-sidebar-logo">
-        <Link href="/admin" style={{ color: 'inherit' }}>fbn<span style={{ fontWeight: 200 }}>STUDIO</span></Link>
+        <Link href="/admin" style={{ color: 'inherit' }}>VGAR<span style={{ fontWeight: 200 }}>CO</span></Link>
         <span style={{ display: 'block', fontSize: '0.625rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.5, marginTop: '4px' }}>
-          Admin Panel
+          Quản trị
         </span>
       </div>
 
@@ -46,7 +46,7 @@ export default function AdminSidebar() {
 
       <div style={{ marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
         <Link href="/" className="admin-nav-link" target="_blank" rel="noopener">
-          ↗ Website anzeigen
+          ↗ Xem website
         </Link>
         <button
           onClick={handleLogout}
@@ -62,7 +62,7 @@ export default function AdminSidebar() {
             padding: 'inherit',
           }}
         >
-          ⏻ Abmelden
+          ⏻ Đăng xuất
         </button>
       </div>
     </aside>

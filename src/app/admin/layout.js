@@ -53,7 +53,7 @@ export default function AdminLayout({ children }) {
         justifyContent: 'center',
         background: 'var(--color-surface-warm)',
       }}>
-        <div style={{ opacity: 0.5, fontSize: '0.875rem' }}>Laden...</div>
+        <div style={{ opacity: 0.5, fontSize: '0.875rem' }}>Đang tải...</div>
       </div>
     );
   }
