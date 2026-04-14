@@ -55,11 +55,14 @@ export default async function ProjectDetailPage({ params }) {
 
   // Build gallery images from the Cloudinary public IDs map
   const publicIds = GALLERY_MAP[slug] || [];
-  const galleryImages = publicIds.map(pid => 
+  const coverPid = project.cover_image || (publicIds.length > 0 ? publicIds[0] : null);
+  // Exclude cover image from gallery
+  const galleryPublicIds = publicIds.filter(pid => pid !== coverPid);
+  const galleryImages = galleryPublicIds.map(pid =>
     `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1200/${pid}`
   );
-  const heroImage = publicIds.length > 0
-    ? `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1920/${publicIds[0]}`
+  const heroImage = coverPid
+    ? `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1920/${coverPid}`
     : null;
 
   return (

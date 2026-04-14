@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
 const DEFAULT_SETTINGS = [
-  { key: 'company_name', value: 'VGARCO CO.,LTD' },
-  { key: 'address', value: 'Hà Nội, Việt Nam' },
+  { key: 'company_name', value: 'CÔNG TY TNHH TƯ VẤN XÂY DỰNG VGARCO' },
+  { key: 'address', value: 'Số 75, ngõ 6, đường Đặng Văn Ngữ, Phường Phương Liên, Quận Đống Đa, Hà Nội' },
   { key: 'email', value: 'admin@vgarco.vn' },
-  { key: 'phone', value: '+84 123 456 789' },
+  { key: 'phone', value: '+84 912 345 678' },
   { key: 'office_hours', value: 'Thứ 2 – Thứ 6, 08:00–17:00' },
   { key: 'hero_title', value: 'Lắng nghe – Phân tích – Sáng tạo – Phát triển giải pháp' },
   { key: 'about_text', value: 'VGARCO CO.,LTD là công ty kiến trúc và xây dựng với chuyên môn trong thiết kế, thi công các công trình giáo dục, văn hóa, dân dụng và công nghiệp.' },
