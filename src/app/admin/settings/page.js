@@ -64,17 +64,17 @@ export default function AdminSettingsPage() {
           {settings.map(s => (
             <div key={s.key} className="form-group">
               <label className="form-label">{LABELS[s.key] || s.key}</label>
-              {s.value.length > 80 ? (
+              {(s.value || '').length > 80 ? (
                 <textarea
                   className="form-input-bordered"
                   style={{ minHeight: '80px' }}
-                  value={s.value}
+                  value={s.value || ''}
                   onChange={e => updateSetting(s.key, e.target.value)}
                 />
               ) : (
                 <input
                   className="form-input-bordered"
-                  value={s.value}
+                  value={s.value || ''}
                   onChange={e => updateSetting(s.key, e.target.value)}
                 />
               )}

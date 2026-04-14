@@ -26,6 +26,7 @@ function createMockClient() {
       signOut: () => Promise.resolve({ error: null }),
       getSession: () => Promise.resolve({ data: { session: null } }),
       getUser: () => Promise.resolve({ data: { user: null } }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
     },
   };
 }

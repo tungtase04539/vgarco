@@ -14,9 +14,6 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main>{children}</main>
         <Footer />
-        <a href="/lien-he" className="floating-contact" title="Liên hệ">
-          ✉
-        </a>
       </body>
     </html>
   );
