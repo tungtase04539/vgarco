@@ -16,12 +16,16 @@ export default function Footer() {
           <div className="footer-grid">
             <div>
               <div className="footer-brand">
-                VGARCO CO.,LTD
+                CÔNG TY TNHH TƯ VẤN XÂY DỰNG VGARCO
               </div>
               <div className="footer-address">
-                Hà Nội, Việt Nam<br /><br />
+                Số 75, ngõ 6, đường Đặng Văn Ngữ,<br />
+                Phường Phương Liên, Quận Đống Đa,<br />
+                Thành phố Hà Nội, Việt Nam<br /><br />
+                MST: 2901635947<br />
+                Người đại diện: Vũ Duy Hùng<br /><br />
                 <a href="mailto:admin@vgarco.vn">admin@vgarco.vn</a><br />
-                <a href="tel:+84123456789">+84 123 456 789</a>
+                <a href="tel:+84912345678">+84 912 345 678</a>
               </div>
             </div>
 
