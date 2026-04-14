@@ -169,43 +169,45 @@ export default function AdminProjectsPage() {
               {/* ===== COVER IMAGE PICKER ===== */}
               <div className="form-group">
                 <label className="form-label">Ảnh đại diện dự án</label>
+
+                {/* Current cover preview — always show if cover_image is set */}
+                {form.cover_image && (
+                  <div style={{ marginBottom: '0.75rem' }}>
+                    <div style={{
+                      display: 'inline-block',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      border: '3px solid var(--color-primary, #2d3436)',
+                      position: 'relative',
+                    }}>
+                      <img
+                        src={`https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_300,h_200,c_fill/${form.cover_image}`}
+                        alt="Cover preview"
+                        style={{ display: 'block', width: '300px', height: '200px', objectFit: 'cover' }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setForm({...form, cover_image: ''})}
+                        style={{
+                          position: 'absolute', top: '6px', right: '6px',
+                          background: 'rgba(0,0,0,0.7)', color: 'white',
+                          border: 'none', borderRadius: '50%',
+                          width: '28px', height: '28px', cursor: 'pointer',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontSize: '14px', fontWeight: 'bold',
+                        }}
+                        title="Xóa ảnh đại diện"
+                      >✕</button>
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '4px' }}>
+                      Đang chọn làm ảnh đại diện
+                    </div>
+                  </div>
+                )}
+
+                {/* Gallery picker */}
                 {galleryImages.length > 0 ? (
                   <>
-                    {/* Current cover preview */}
-                    {form.cover_image && (
-                      <div style={{ marginBottom: '0.75rem' }}>
-                        <div style={{
-                          display: 'inline-block',
-                          borderRadius: '8px',
-                          overflow: 'hidden',
-                          border: '3px solid var(--color-primary, #2d3436)',
-                          position: 'relative',
-                        }}>
-                          <img
-                            src={`https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_300,h_200,c_fill/${form.cover_image}`}
-                            alt="Cover preview"
-                            style={{ display: 'block', width: '300px', height: '200px', objectFit: 'cover' }}
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setForm({...form, cover_image: ''})}
-                            style={{
-                              position: 'absolute', top: '6px', right: '6px',
-                              background: 'rgba(0,0,0,0.7)', color: 'white',
-                              border: 'none', borderRadius: '50%',
-                              width: '28px', height: '28px', cursor: 'pointer',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center',
-                              fontSize: '14px', fontWeight: 'bold',
-                            }}
-                            title="Bỏ chọn ảnh đại diện"
-                          >✕</button>
-                        </div>
-                        <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '4px' }}>
-                          Đang chọn làm ảnh đại diện
-                        </div>
-                      </div>
-                    )}
-
                     <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '0.5rem' }}>
                       Chọn một ảnh từ gallery ({galleryImages.length} ảnh có sẵn):
                     </p>
