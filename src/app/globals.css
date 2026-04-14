@@ -197,20 +197,13 @@ h4 { font-size: var(--font-title-lg); }
 
 .navbar-logo {
   display: flex;
-  align-items: baseline;
-  gap: 2px;
-  font-size: 1.125rem;
-  white-space: nowrap;
+  align-items: center;
   margin-right: var(--space-sm);
 }
 
-.navbar-logo-bold {
-  font-weight: 700;
-}
-
-.navbar-logo-light {
-  font-weight: 200;
-  letter-spacing: 0.15em;
+.navbar-logo-img {
+  height: 32px;
+  width: auto;
 }
 
 .navbar-links {
@@ -249,13 +242,6 @@ h4 { font-size: var(--font-title-lg); }
 
 .navbar-link-cta:hover {
   opacity: 0.85;
-}
-
-.navbar-lang {
-  padding: 8px 12px;
-  font-size: var(--font-body-sm);
-  font-weight: 500;
-  color: var(--color-on-surface-variant);
 }
 
 /* Mobile hamburger */

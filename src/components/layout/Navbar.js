@@ -20,8 +20,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${isOpen ? 'open' : ''}`}>
       <Link href="/" className="navbar-logo">
-        <span className="navbar-logo-bold">VGAR</span>
-        <span className="navbar-logo-light">CO</span>
+        <img src="/logo.svg" alt="VGARCO" className="navbar-logo-img" />
       </Link>
 
       <button
@@ -45,7 +44,6 @@ export default function Navbar() {
             {link.label}
           </Link>
         ))}
-        <span className="navbar-lang">VN</span>
         <Link
           href="/lien-he"
           className="navbar-link-cta"
