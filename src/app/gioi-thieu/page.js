@@ -1,9 +1,24 @@
 import Hero from '@/components/sections/Hero';
 import CTASection from '@/components/sections/CTASection';
+import { getSupabaseServer } from '@/lib/supabase';
 
 export const metadata = { title: 'Giới thiệu | VGARCO' };
 
-export default function StudioPage() {
+const FALLBACK_TEAM = [
+  { name: 'Thành viên 1', title: 'Chức vụ', photo_url: '/team/member-1.jpg' },
+  { name: 'Thành viên 2', title: 'Chức vụ', photo_url: '/team/member-2.jpg' },
+  { name: 'Thành viên 3', title: 'Chức vụ', photo_url: '/team/member-3.jpg' },
+  { name: 'Thành viên 4', title: 'Chức vụ', photo_url: '/team/member-4.jpg' },
+];
+
+export default async function StudioPage() {
+  let team = FALLBACK_TEAM;
+  try {
+    const supabase = getSupabaseServer();
+    const { data } = await supabase.from('team_members').select('*').eq('is_active', true).order('display_order');
+    if (data?.length > 0) team = data;
+  } catch (e) {}
+
   return (
     <>
       <Hero
@@ -17,48 +32,15 @@ export default function StudioPage() {
           <h2 style={{ marginBottom: '1.5rem' }}>Kiến trúc hiện đại, chất lượng bền vững</h2>
           <p className="text-body-lg text-muted">
             VGARCO CO.,LTD là công ty kiến trúc và xây dựng với chuyên môn trong thiết kế,
-            thi công các công trình giáo dục, văn hóa, dân dụng và công nghiệp. Chúng tôi 
+            thi công các công trình giáo dục, văn hóa, dân dụng và công nghiệp. Chúng tôi
             cam kết mang đến những giải pháp kiến trúc sáng tạo, tiết kiệm năng lượng
             và tạo ra không gian sống bền vững cho cộng đồng.
           </p>
         </div>
       </section>
 
-      {/* Founder Section */}
-      <section className="section-lg">
-        <div className="container">
-          <div className="grid-2" style={{ alignItems: 'center', gap: '4rem' }}>
-            <div
-              style={{
-                aspectRatio: '3/4',
-                background: 'linear-gradient(135deg, #2d3436 0%, #636e72 100%)',
-                borderRadius: 'var(--radius-md)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontSize: '1.25rem',
-              }}
-            >
-              VGARCO Team
-            </div>
-            <div>
-              <p className="text-label" style={{ marginBottom: '0.5rem' }}>Ban lãnh đạo</p>
-              <h3 style={{ marginBottom: '0.5rem', fontSize: '2rem' }}>VGARCO CO.,LTD</h3>
-              <p className="text-muted" style={{ marginBottom: '1.5rem' }}>Kiến trúc & Xây dựng</p>
-              <p className="text-body-lg text-muted">
-                VGARCO được thành lập với tầm nhìn tạo ra kiến trúc tôn trọng không gian hiện hữu
-                và đồng thời phát triển giải pháp hiện đại. Với kinh nghiệm phong phú trong 
-                thiết kế và thi công, chúng tôi kết hợp sự chính xác kỹ thuật 
-                với tư duy thiết kế sáng tạo.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Values */}
-      <section className="section-lg section-warm">
+      <section className="section-lg">
         <div className="container">
           <h2 className="text-center" style={{ marginBottom: '4rem' }}>Giá trị cốt lõi</h2>
           <div className="grid-3">
@@ -70,6 +52,33 @@ export default function StudioPage() {
               <div key={i} style={{ textAlign: 'center' }}>
                 <h3 style={{ marginBottom: '1rem' }}>{v.title}</h3>
                 <p className="text-muted">{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team */}
+      <section className="section-lg section-warm">
+        <div className="container">
+          <h2 className="text-center" style={{ marginBottom: '4rem' }}>Đội ngũ</h2>
+          <div className="grid-4">
+            {team.map((m, i) => (
+              <div key={i} className="team-card">
+                <div
+                  className="team-photo"
+                  style={{
+                    backgroundImage: m.photo_url ? `url(${m.photo_url})` : undefined,
+                  }}
+                >
+                  {!m.photo_url && (
+                    <span style={{ color: 'white', fontSize: '0.875rem' }}>Ảnh</span>
+                  )}
+                </div>
+                <div className="team-info">
+                  <div className="team-name">{m.name}</div>
+                  <div className="team-title">{m.title}</div>
+                </div>
               </div>
             ))}
           </div>

@@ -8,7 +8,7 @@ export default function AdminTeamPage() {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
   const [toast, setToast] = useState('');
-  const [form, setForm] = useState({ name: '', title: '', bio: '', display_order: 1, is_active: true });
+  const [form, setForm] = useState({ name: '', title: '', bio: '', photo_url: '', display_order: 1, is_active: true });
 
   useEffect(() => { loadTeam(); }, []);
 
@@ -19,7 +19,7 @@ export default function AdminTeamPage() {
     } catch (e) {}
   }
 
-  function openCreate() { setEditing(null); setForm({ name: '', title: '', bio: '', display_order: members.length + 1, is_active: true }); setShowForm(true); }
+  function openCreate() { setEditing(null); setForm({ name: '', title: '', bio: '', photo_url: '', display_order: members.length + 1, is_active: true }); setShowForm(true); }
   function openEdit(m) { setEditing(m); setForm({ ...m }); setShowForm(true); }
 
   async function handleSave(e) {
@@ -64,6 +64,15 @@ export default function AdminTeamPage() {
                 <input className="form-input-bordered" value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
               </div>
               <div className="form-group">
+                <label className="form-label">Ảnh đại diện (URL)</label>
+                <input className="form-input-bordered" value={form.photo_url || ''} onChange={e => setForm({...form, photo_url: e.target.value})} placeholder="/team/member-1.jpg hoặc URL Cloudinary" />
+                {form.photo_url && (
+                  <div style={{ marginTop: '0.5rem' }}>
+                    <img src={form.photo_url} alt="Preview" style={{ width: '80px', height: '100px', objectFit: 'cover', borderRadius: '6px' }} />
+                  </div>
+                )}
+              </div>
+              <div className="form-group">
                 <label className="form-label">Giới thiệu</label>
                 <textarea className="form-input-bordered" style={{ minHeight: '100px' }} value={form.bio} onChange={e => setForm({...form, bio: e.target.value})} />
               </div>
@@ -90,11 +99,18 @@ export default function AdminTeamPage() {
 
       <table className="admin-table">
         <thead>
-          <tr><th>#</th><th>Họ tên</th><th>Chức vụ</th><th>Hiển thị</th><th>Thao tác</th></tr>
+          <tr><th style={{ width: '70px' }}>Ảnh</th><th>#</th><th>Họ tên</th><th>Chức vụ</th><th>Hiển thị</th><th>Thao tác</th></tr>
         </thead>
         <tbody>
           {members.map(m => (
             <tr key={m.id}>
+              <td>
+                {m.photo_url ? (
+                  <img src={m.photo_url} alt={m.name} style={{ width: '50px', height: '62px', objectFit: 'cover', borderRadius: '4px' }} />
+                ) : (
+                  <div style={{ width: '50px', height: '62px', background: '#f0f0f0', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '0.625rem' }}>N/A</div>
+                )}
+              </td>
               <td>{m.display_order}</td>
               <td><strong>{m.name}</strong></td>
               <td>{m.title}</td>

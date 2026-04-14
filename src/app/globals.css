@@ -698,6 +698,42 @@ h4 { font-size: var(--font-title-lg); }
   border-radius: 2px;
 }
 
+/* --- Team --- */
+.team-card {
+  text-align: center;
+}
+
+.team-photo {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+  background-size: cover;
+  background-position: center top;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: var(--space-md);
+  filter: grayscale(100%);
+  transition: filter var(--transition-normal);
+}
+
+.team-card:hover .team-photo {
+  filter: grayscale(0%);
+}
+
+.team-name {
+  font-size: var(--font-title-md);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.team-title {
+  font-size: var(--font-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
 /* --- Admin --- */
 .admin-layout {
   display: grid;
