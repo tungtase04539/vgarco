@@ -19,7 +19,7 @@ const FALLBACK_SERVICES = [
   { title: 'Tư vấn thiết kế', description: 'Tư vấn thiết kế toàn diện cho chủ đầu tư, từ lập kế hoạch đến hoàn thiện giải pháp.' },
 ];
 
-export default async function LeistungenPage() {
+export default async function DichVuPage() {
   let services = FALLBACK_SERVICES;
   try {
     const supabase = getSupabaseServer();

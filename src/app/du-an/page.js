@@ -4,7 +4,7 @@ import ProjectsGrid from '@/components/sections/ProjectsGrid';
 
 export const metadata = { title: 'Dự án | VGARCO' };
 
-export default function ProjektePage() {
+export default function DuAnPage() {
   return (
     <>
       <Hero

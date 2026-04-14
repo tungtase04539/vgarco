@@ -1,5 +1,5 @@
 -- ============================================================
--- fbnSTUDIO CMS — Supabase Initial Schema
+-- VGARCO CMS — Supabase Initial Schema
 -- Run this in Supabase SQL Editor (supabase.com → your project → SQL Editor)
 -- ============================================================
 

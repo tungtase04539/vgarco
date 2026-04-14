@@ -11,7 +11,7 @@ const FALLBACK_TEAM = [
   { name: 'Thành viên 4', title: 'Chức vụ', photo_url: '/team/member-4.jpg' },
 ];
 
-export default async function StudioPage() {
+export default async function GioiThieuPage() {
   let team = FALLBACK_TEAM;
   try {
     const supabase = getSupabaseServer();

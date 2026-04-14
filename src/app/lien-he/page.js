@@ -4,7 +4,7 @@ import ContactForm from '@/components/sections/ContactForm';
 
 export const metadata = { title: 'Liên hệ | VGARCO' };
 
-export default function KontaktPage() {
+export default function LienHePage() {
   return (
     <>
       <Hero
