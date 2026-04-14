@@ -41,7 +41,7 @@ export default async function HomePage() {
   // Build hero slides from featured projects
   const heroSlides = projects
     .map(p => {
-      const images = GALLERY_MAP[p.slug] || [];
+      const images = (p.gallery && p.gallery.length > 0) ? p.gallery : (GALLERY_MAP[p.slug] || []);
       const coverPid = p.cover_image || (images.length > 0 ? images[0] : null);
       if (!coverPid) return null;
       return {
@@ -108,7 +108,7 @@ export default async function HomePage() {
           <h2 style={{ marginBottom: '2rem' }}>Dự án nổi bật</h2>
           <div className="grid-2">
             {projects.map((p, i) => {
-              const images = GALLERY_MAP[p.slug] || [];
+              const images = (p.gallery && p.gallery.length > 0) ? p.gallery : (GALLERY_MAP[p.slug] || []);
               const coverPid = p.cover_image || (images.length > 0 ? images[0] : null);
               const thumbUrl = coverPid
                 ? `https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/${coverPid}`

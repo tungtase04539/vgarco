@@ -11,11 +11,12 @@ export default function AdminProjectsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [toast, setToast] = useState('');
+  const [newImageId, setNewImageId] = useState('');
 
   const [form, setForm] = useState({
     code: '', title: '', slug: '', category: '', client: '',
     location: '', area: '', phases: '', status: '', description: '',
-    is_featured: false, display_order: 0, cover_image: '',
+    is_featured: false, display_order: 0, cover_image: '', gallery: [],
   });
 
   useEffect(() => { loadProjects(); }, []);
@@ -27,24 +28,33 @@ export default function AdminProjectsPage() {
     } catch (e) {}
   }
 
+  function getGallery(project) {
+    if (project.gallery && project.gallery.length > 0) return project.gallery;
+    return GALLERY_MAP[project.slug] || [];
+  }
+
   function openCreate() {
     setEditingProject(null);
-    setForm({ code: '', title: '', slug: '', category: '', client: '', location: '', area: '', phases: '', status: '', description: '', is_featured: false, display_order: projects.length, cover_image: '' });
+    setForm({ code: '', title: '', slug: '', category: '', client: '', location: '', area: '', phases: '', status: '', description: '', is_featured: false, display_order: projects.length, cover_image: '', gallery: [] });
+    setNewImageId('');
     setShowForm(true);
   }
 
   function openEdit(project) {
     setEditingProject(project);
-    setForm({ ...project, cover_image: project.cover_image || '' });
+    const gallery = getGallery(project);
+    setForm({ ...project, cover_image: project.cover_image || '', gallery: gallery });
+    setNewImageId('');
     setShowForm(true);
   }
 
   async function handleSave(e) {
     e.preventDefault();
-    const slug = form.slug || form.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const slug = form.slug || form.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\u0111/g, 'd').replace(/\u0110/g, 'D').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
     const payload = { ...form, slug };
     if (!payload.cover_image) payload.cover_image = null;
+    if (!payload.gallery || payload.gallery.length === 0) payload.gallery = null;
 
     if (editingProject) {
       try {
@@ -79,17 +89,29 @@ export default function AdminProjectsPage() {
     setTimeout(() => setToast(''), 3000);
   }
 
-  // Get the effective slug for gallery lookup
-  const formSlug = form.slug || (form.title ? form.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : '');
-  const galleryImages = GALLERY_MAP[formSlug] || [];
+  // Gallery management
+  function removeGalleryImage(idx) {
+    const updated = [...form.gallery];
+    updated.splice(idx, 1);
+    setForm({ ...form, gallery: updated });
+  }
 
-  // Get cover image url for table display
+  function addGalleryImage() {
+    if (!newImageId.trim()) return;
+    setForm({ ...form, gallery: [...form.gallery, newImageId.trim()] });
+    setNewImageId('');
+  }
+
+  function setCoverFromGallery(pid) {
+    setForm({ ...form, cover_image: pid });
+  }
+
   function getCoverUrl(project) {
     const coverPid = project.cover_image;
     if (coverPid) {
       return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_120,h_80,c_fill/${coverPid}`;
     }
-    const images = GALLERY_MAP[project.slug] || [];
+    const images = getGallery(project);
     if (images.length > 0) {
       return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_120,h_80,c_fill/${images[0]}`;
     }
@@ -166,119 +188,112 @@ export default function AdminProjectsPage() {
                 <textarea className="form-input-bordered" style={{ minHeight: '100px' }} value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
               </div>
 
-              {/* ===== COVER IMAGE PICKER ===== */}
+              {/* ===== GALLERY MANAGEMENT ===== */}
               <div className="form-group">
-                <label className="form-label">Ảnh đại diện dự án</label>
+                <label className="form-label">Gallery ảnh dự án ({form.gallery.length} ảnh)</label>
 
-                {/* Current cover preview — always show if cover_image is set */}
+                {/* Cover image indicator */}
                 {form.cover_image && (
-                  <div style={{ marginBottom: '0.75rem' }}>
-                    <div style={{
-                      display: 'inline-block',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      border: '3px solid var(--color-primary, #2d3436)',
-                      position: 'relative',
-                    }}>
-                      <img
-                        src={`https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_300,h_200,c_fill/${form.cover_image}`}
-                        alt="Cover preview"
-                        style={{ display: 'block', width: '300px', height: '200px', objectFit: 'cover' }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setForm({...form, cover_image: ''})}
-                        style={{
-                          position: 'absolute', top: '6px', right: '6px',
-                          background: 'rgba(0,0,0,0.7)', color: 'white',
-                          border: 'none', borderRadius: '50%',
-                          width: '28px', height: '28px', cursor: 'pointer',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          fontSize: '14px', fontWeight: 'bold',
-                        }}
-                        title="Xóa ảnh đại diện"
-                      >✕</button>
-                    </div>
-                    <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '4px' }}>
-                      Đang chọn làm ảnh đại diện
-                    </div>
+                  <div style={{ marginBottom: '0.5rem', fontSize: '0.8rem', color: '#666' }}>
+                    Ảnh đại diện: <strong>{form.cover_image.split('/').pop()}</strong>
+                    <button type="button" onClick={() => setForm({...form, cover_image: ''})}
+                      style={{ marginLeft: '8px', background: 'none', border: 'none', color: 'var(--color-error)', cursor: 'pointer', fontSize: '0.8rem' }}>
+                      Bỏ chọn
+                    </button>
                   </div>
                 )}
 
-                {/* Gallery picker */}
-                {galleryImages.length > 0 ? (
-                  <>
-                    <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '0.5rem' }}>
-                      Chọn một ảnh từ gallery ({galleryImages.length} ảnh có sẵn):
-                    </p>
-                    <div style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
-                      gap: '8px',
-                      maxHeight: '260px',
-                      overflowY: 'auto',
-                      padding: '4px',
-                      border: '1px solid #eee',
-                      borderRadius: '8px',
-                      background: '#fafafa',
-                    }}>
-                      {galleryImages.map((pid, idx) => {
-                        const isSelected = form.cover_image === pid;
-                        return (
-                          <div
-                            key={idx}
-                            onClick={() => setForm({...form, cover_image: pid})}
-                            style={{
-                              cursor: 'pointer',
-                              borderRadius: '6px',
-                              overflow: 'hidden',
-                              border: isSelected ? '3px solid var(--color-primary, #2d3436)' : '2px solid transparent',
-                              opacity: isSelected ? 1 : 0.7,
-                              transition: 'all 0.2s ease',
-                              position: 'relative',
-                            }}
-                            title={`Ảnh ${idx + 1}`}
-                            onMouseEnter={e => { if (!isSelected) e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1.05)'; }}
-                            onMouseLeave={e => { if (!isSelected) e.currentTarget.style.opacity = '0.7'; e.currentTarget.style.transform = 'scale(1)'; }}
-                          >
-                            <img
-                              src={`https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_120,h_80,c_fill/${pid}`}
-                              alt={`Ảnh ${idx + 1}`}
-                              style={{ display: 'block', width: '100%', height: '80px', objectFit: 'cover' }}
-                              loading="lazy"
-                            />
-                            {isSelected && (
-                              <div style={{
-                                position: 'absolute', top: '4px', right: '4px',
-                                background: 'var(--color-primary, #2d3436)', color: 'white',
-                                borderRadius: '50%', width: '20px', height: '20px',
+                {form.gallery.length > 0 ? (
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
+                    gap: '8px',
+                    maxHeight: '400px',
+                    overflowY: 'auto',
+                    padding: '8px',
+                    border: '1px solid #eee',
+                    borderRadius: '8px',
+                    background: '#fafafa',
+                  }}>
+                    {form.gallery.map((pid, idx) => {
+                      const isCover = form.cover_image === pid;
+                      return (
+                        <div key={idx} style={{
+                          position: 'relative',
+                          borderRadius: '6px',
+                          overflow: 'hidden',
+                          border: isCover ? '3px solid var(--color-primary, #2d3436)' : '1px solid #ddd',
+                        }}>
+                          <img
+                            src={`https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_150,h_100,c_fill/${pid}`}
+                            alt={`Ảnh ${idx + 1}`}
+                            style={{ display: 'block', width: '100%', height: '100px', objectFit: 'cover' }}
+                            loading="lazy"
+                          />
+                          {/* Action buttons overlay */}
+                          <div style={{
+                            position: 'absolute', top: 0, right: 0,
+                            display: 'flex', gap: '2px', padding: '4px',
+                          }}>
+                            {/* Set as cover */}
+                            {!isCover && (
+                              <button type="button" onClick={() => setCoverFromGallery(pid)}
+                                title="Chọn làm ảnh đại diện"
+                                style={{
+                                  background: 'rgba(0,0,0,0.7)', color: 'white',
+                                  border: 'none', borderRadius: '50%',
+                                  width: '24px', height: '24px', cursor: 'pointer',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  fontSize: '12px',
+                                }}>&#9733;</button>
+                            )}
+                            {/* Delete */}
+                            <button type="button" onClick={() => removeGalleryImage(idx)}
+                              title="Xóa ảnh khỏi gallery"
+                              style={{
+                                background: 'rgba(186,26,26,0.85)', color: 'white',
+                                border: 'none', borderRadius: '50%',
+                                width: '24px', height: '24px', cursor: 'pointer',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 fontSize: '12px', fontWeight: 'bold',
-                              }}>✓</div>
-                            )}
+                              }}>&#10005;</button>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </>
+                          {/* Cover badge */}
+                          {isCover && (
+                            <div style={{
+                              position: 'absolute', bottom: 0, left: 0, right: 0,
+                              background: 'rgba(0,0,0,0.7)', color: 'white',
+                              fontSize: '0.625rem', textAlign: 'center', padding: '2px',
+                              fontWeight: 600, letterSpacing: '0.04em',
+                            }}>ẢNH ĐẠI DIỆN</div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 ) : (
-                  <div style={{
-                    padding: '1.5rem',
-                    background: '#f5f5f5',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                    color: '#999',
-                    fontSize: '0.875rem',
-                  }}>
-                    {formSlug ? (
-                      <>Chưa có ảnh trong gallery cho slug &quot;{formSlug}&quot;. Hãy upload ảnh lên Cloudinary trước.</>
-                    ) : (
-                      <>Nhập tên dự án để xem gallery ảnh có sẵn.</>
-                    )}
+                  <div style={{ padding: '1.5rem', background: '#f5f5f5', borderRadius: '8px', textAlign: 'center', color: '#999', fontSize: '0.875rem' }}>
+                    Chưa có ảnh trong gallery.
                   </div>
                 )}
+
+                {/* Add new image */}
+                <div style={{ display: 'flex', gap: '8px', marginTop: '0.75rem' }}>
+                  <input
+                    className="form-input-bordered"
+                    style={{ flex: 1 }}
+                    value={newImageId}
+                    onChange={e => setNewImageId(e.target.value)}
+                    placeholder="Cloudinary Public ID (vd: vgarco/projects/ten-du-an/abc123)"
+                    onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addGalleryImage(); } }}
+                  />
+                  <button type="button" onClick={addGalleryImage}
+                    className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                    + Thêm ảnh
+                  </button>
+                </div>
               </div>
-              {/* ===== END COVER IMAGE PICKER ===== */}
+              {/* ===== END GALLERY ===== */}
 
               <div className="form-group">
                 <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
@@ -303,7 +318,7 @@ export default function AdminProjectsPage() {
             <th>Mã</th>
             <th>Tên dự án</th>
             <th>Danh mục</th>
-            <th>Trạng thái</th>
+            <th>Gallery</th>
             <th>Nổi bật</th>
             <th>Thao tác</th>
           </tr>
@@ -311,32 +326,20 @@ export default function AdminProjectsPage() {
         <tbody>
           {projects.map(p => {
             const coverUrl = getCoverUrl(p);
+            const imgCount = getGallery(p).length;
             return (
               <tr key={p.id}>
                 <td>
                   {coverUrl ? (
-                    <img
-                      src={coverUrl}
-                      alt={p.title}
-                      style={{
-                        width: '120px', height: '80px',
-                        objectFit: 'cover', borderRadius: '6px',
-                        border: p.cover_image ? '2px solid var(--color-primary, #333)' : '1px solid #eee',
-                      }}
-                    />
+                    <img src={coverUrl} alt={p.title} style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '6px', border: p.cover_image ? '2px solid var(--color-primary, #333)' : '1px solid #eee' }} />
                   ) : (
-                    <div style={{
-                      width: '120px', height: '80px',
-                      background: '#f0f0f0', borderRadius: '6px',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: '#ccc', fontSize: '0.75rem',
-                    }}>Chưa có ảnh</div>
+                    <div style={{ width: '120px', height: '80px', background: '#f0f0f0', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '0.75rem' }}>Chưa có ảnh</div>
                   )}
                 </td>
                 <td><strong>{p.code}</strong></td>
                 <td>{p.title}</td>
                 <td>{p.category}</td>
-                <td>{p.status}</td>
+                <td>{imgCount} ảnh</td>
                 <td>{p.is_featured ? '✓' : '—'}</td>
                 <td>
                   <div className="admin-actions">

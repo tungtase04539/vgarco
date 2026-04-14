@@ -53,8 +53,10 @@ export default async function ProjectDetailPage({ params }) {
     );
   }
 
-  // Build gallery images from the Cloudinary public IDs map
-  const publicIds = GALLERY_MAP[slug] || [];
+  // Use DB gallery if available, fallback to static GALLERY_MAP
+  const publicIds = (project.gallery && project.gallery.length > 0)
+    ? project.gallery
+    : (GALLERY_MAP[slug] || []);
   const coverPid = project.cover_image || (publicIds.length > 0 ? publicIds[0] : null);
   // Exclude cover image from gallery
   const galleryPublicIds = publicIds.filter(pid => pid !== coverPid);
