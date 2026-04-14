@@ -4,7 +4,6 @@ export default function AdminDashboard() {
   const stats = [
     { label: 'Dự án', value: '12', href: '/admin/projects' },
     { label: 'Dịch vụ', value: '12', href: '/admin/services' },
-    { label: 'Bài viết', value: '6', href: '/admin/journal' },
     { label: 'Thành viên', value: '1', href: '/admin/team' },
   ];
 
@@ -35,9 +34,6 @@ export default function AdminDashboard() {
           <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem' }}>
             <Link href="/admin/projects" className="btn btn-primary" style={{ fontSize: '0.8rem' }}>
               Quản lý dự án
-            </Link>
-            <Link href="/admin/journal" className="btn btn-outline" style={{ fontSize: '0.8rem', color: 'var(--color-on-surface)' }}>
-              Viết bài mới
             </Link>
           </div>
         </div>

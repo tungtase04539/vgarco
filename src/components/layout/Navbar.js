@@ -8,7 +8,6 @@ const NAV_LINKS = [
   { href: '/gioi-thieu', label: 'Giới thiệu' },
   { href: '/dich-vu', label: 'Dịch vụ' },
   { href: '/du-an', label: 'Dự án' },
-  { href: '/tin-tuc', label: 'Tin tức' },
 ];
 
 export default function Navbar() {

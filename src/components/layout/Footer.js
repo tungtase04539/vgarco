@@ -30,7 +30,6 @@ export default function Footer() {
               <Link href="/gioi-thieu" className="footer-link">Giới thiệu</Link>
               <Link href="/dich-vu" className="footer-link">Dịch vụ</Link>
               <Link href="/du-an" className="footer-link">Dự án</Link>
-              <Link href="/tin-tuc" className="footer-link">Tin tức</Link>
               <Link href="/lien-he" className="footer-link">Liên hệ</Link>
             </div>
 

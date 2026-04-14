@@ -8,7 +8,6 @@ const ADMIN_LINKS = [
   { href: '/admin', label: 'Tổng quan', icon: '◫' },
   { href: '/admin/projects', label: 'Dự án', icon: '▦' },
   { href: '/admin/services', label: 'Dịch vụ', icon: '◇' },
-  { href: '/admin/journal', label: 'Tin tức', icon: '▤' },
   { href: '/admin/team', label: 'Đội ngũ', icon: '◎' },
   { href: '/admin/settings', label: 'Cài đặt', icon: '⚙' },
 ];

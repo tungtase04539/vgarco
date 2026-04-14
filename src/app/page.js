@@ -6,15 +6,13 @@ import { GALLERY_MAP } from '@/lib/gallery-map';
 
 async function getHomeData() {
   const supabase = getSupabaseServer();
-  const [projectsRes, servicesRes, postsRes] = await Promise.all([
+  const [projectsRes, servicesRes] = await Promise.all([
     supabase.from('projects').select('*').eq('is_featured', true).order('display_order').limit(6),
     supabase.from('services').select('*').eq('is_active', true).order('display_order'),
-    supabase.from('journal_posts').select('*').order('published_at', { ascending: false }).limit(3),
   ]);
   return {
     projects: projectsRes.data || [],
     services: servicesRes.data || [],
-    posts: postsRes.data || [],
   };
 }
 
@@ -25,7 +23,7 @@ const FALLBACK_SERVICES = [
 ];
 
 export default async function HomePage() {
-  let data = { projects: [], services: [], posts: [] };
+  let data = { projects: [], services: [] };
   try {
     data = await getHomeData();
   } catch (e) {
@@ -94,8 +92,9 @@ export default async function HomePage() {
           <div className="grid-3">
             {projects.map((p, i) => {
               const images = GALLERY_MAP[p.slug] || [];
-              const thumbUrl = images.length > 0
-                ? `https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/${images[0]}`
+              const coverPid = p.cover_image || (images.length > 0 ? images[0] : null);
+              const thumbUrl = coverPid
+                ? `https://res.cloudinary.com/dmjrk2fov/image/upload/f_auto,q_auto,w_600,h_400,c_fill/${coverPid}`
                 : null;
               return (
               <Link key={i} href={`/du-an/${p.slug}`} className="card">
