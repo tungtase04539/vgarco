@@ -1,8 +1,10 @@
 import Link from 'next/link';
-import Hero from '@/components/sections/Hero';
+import HeroSlider from '@/components/sections/HeroSlider';
 import CTASection from '@/components/sections/CTASection';
 import { getSupabaseServer } from '@/lib/supabase';
 import { GALLERY_MAP } from '@/lib/gallery-map';
+
+const CLOUD = 'dmjrk2fov';
 
 async function getHomeData() {
   const supabase = getSupabaseServer();
@@ -36,11 +38,26 @@ export default async function HomePage() {
 
   const projects = data.projects.length > 0 ? data.projects : [];
 
+  // Build hero slides from featured projects
+  const heroSlides = projects
+    .map(p => {
+      const images = GALLERY_MAP[p.slug] || [];
+      const coverPid = p.cover_image || (images.length > 0 ? images[0] : null);
+      if (!coverPid) return null;
+      return {
+        image: `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1920/${coverPid}`,
+        title: p.title,
+        category: p.category,
+        slug: p.slug,
+      };
+    })
+    .filter(Boolean);
+
   return (
     <>
-      <Hero
+      <HeroSlider
+        slides={heroSlides}
         title="Lắng nghe – Phân tích – Sáng tạo – Phát triển giải pháp"
-        backgroundImage="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1920&q=80"
       />
 
       {/* About Section */}
