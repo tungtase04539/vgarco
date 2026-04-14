@@ -58,14 +58,13 @@ export default function KontaktPage() {
                 }}
               >
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5!2d105.832!3d21.0065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDAwJzIzLjQiTiAxMDXCsDQ5JzU1LjIiRQ!5e0!3m2!1svi!2s!4v1"
+                  src="https://maps.google.com/maps?q=75+ng%C3%B5+6+%C4%90%E1%BA%B7ng+V%C4%83n+Ng%E1%BB%AF+Ph%C6%B0%C6%A1ng+Li%C3%AAn+%C4%90%E1%BB%91ng+%C4%90a+H%C3%A0+N%E1%BB%99i&t=&z=16&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="VGARCO - Bản đồ"
+                  title="VGARCO - 75 ngõ 6 Đặng Văn Ngữ, Đống Đa, Hà Nội"
                 />
               </div>
             </div>
