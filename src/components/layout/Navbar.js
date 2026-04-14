@@ -6,8 +6,9 @@ import { usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
   { href: '/gioi-thieu', label: 'Giới thiệu' },
-  { href: '/dich-vu', label: 'Dịch vụ' },
   { href: '/du-an', label: 'Dự án' },
+  { href: '/dich-vu', label: 'Dịch vụ' },
+  { href: '/lien-he', label: 'Liên hệ' },
 ];
 
 export default function Navbar() {
@@ -44,13 +45,6 @@ export default function Navbar() {
             {link.label}
           </Link>
         ))}
-        <Link
-          href="/lien-he"
-          className="navbar-link-cta"
-          onClick={() => setIsOpen(false)}
-        >
-          LIÊN HỆ
-        </Link>
       </div>
     </nav>
   );
