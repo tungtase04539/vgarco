@@ -106,7 +106,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="container">
           <h2 style={{ marginBottom: '2rem' }}>Dự án nổi bật</h2>
-          <div className="grid-3">
+          <div className="grid-2">
             {projects.map((p, i) => {
               const images = GALLERY_MAP[p.slug] || [];
               const coverPid = p.cover_image || (images.length > 0 ? images[0] : null);
